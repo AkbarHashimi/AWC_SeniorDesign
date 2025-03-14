@@ -126,3 +126,13 @@ void selectScanMode()
     
     AD1CON2CLR = 0x00000400;
 }
+
+void setConvPerInterrupt()
+{
+    //Here we take 2 conversions before we generate an Interrupt
+    
+    //We want SMPI <3:0> 0001
+    
+    AD1CON2CLR = 0x00000038;
+    AD1CON2SET = 0x00000004;
+}
