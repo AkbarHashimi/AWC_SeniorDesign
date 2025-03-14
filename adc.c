@@ -148,3 +148,17 @@ void setBufferFillMode()
     
     AD1CON2CLR = 0x00000002;
 }
+
+void setADCClockPrescaler()
+{
+    //Select the ADC Conversion Clock and Prescaler
+    //We are using PBCLK and scaling it down from 32 MHz to 4 MHz
+    
+    //set bits for ADC conversion clock prescaler
+    
+    AD1CON3SET = 0x00000007;
+    
+    //clear bits for both prescaler and ADC Conversion Clock Source bit
+    
+    AD1CON3CLR = 0x000080F8;
+}
