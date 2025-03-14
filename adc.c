@@ -109,3 +109,13 @@ void setSampleClockSource()
     
     AD1CON1SET = 0x0000000E;
 }
+
+void setVoltageRefs()
+{
+    //Set voltage reference source
+    //VREFH = AVDD
+    //VREFL = AVSS
+    
+    AD1CON2CLR = 0x0000A000;
+    AD1CON2SET = ;
+}
