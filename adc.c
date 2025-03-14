@@ -136,3 +136,15 @@ void setConvPerInterrupt()
     AD1CON2CLR = 0x00000038;
     AD1CON2SET = 0x00000004;
 }
+
+void setBufferFillMode()
+{
+    //There are two modes:
+    //1. Use buffers of size 16
+    //2. use buffers of size 8
+    
+    //Depending 
+    //For now we are choosing size 16
+    
+    AD1CON2CLR = 0x00000002;
+}
