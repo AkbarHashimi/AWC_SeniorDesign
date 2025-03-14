@@ -86,6 +86,7 @@ void setAlternateMode()
      The order is initially at A, then swaps to B, then back to A, and repeat     
      */
     
+    
     AD1CON2SET = 0x00000001;
     
     
@@ -102,3 +103,9 @@ void setOutputFormat()
     
 }
 
+void setSampleClockSource()
+{
+    //Setting the conversion trigger source selection bits
+    
+    AD1CON1SET = 0x0000000E;
+}
