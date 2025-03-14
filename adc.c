@@ -117,5 +117,5 @@ void setVoltageRefs()
     //VREFL = AVSS
     
     AD1CON2CLR = 0x0000A000;
-    AD1CON2SET = ;
+    
 }
