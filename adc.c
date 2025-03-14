@@ -119,3 +119,10 @@ void setVoltageRefs()
     AD1CON2CLR = 0x0000A000;
     
 }
+
+void selectScanMode()
+{
+    //Disable scan mode
+    
+    AD1CON2CLR = 0x00000400;
+}
