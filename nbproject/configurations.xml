@@ -11,6 +11,7 @@
       <itemPath>motor.h</itemPath>
       <itemPath>adc.h</itemPath>
       <itemPath>timers.h</itemPath>
+      <itemPath>interrupts.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -33,6 +34,7 @@
       <itemPath>motor.c</itemPath>
       <itemPath>adc.c</itemPath>
       <itemPath>timers.c</itemPath>
+      <itemPath>interrupts.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

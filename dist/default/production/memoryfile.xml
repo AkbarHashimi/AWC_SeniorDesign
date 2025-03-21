@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/default/production/SeniorDesign.production.elf">                 
+  <executable name="dist/default/production/Senior-Design-2025.production.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>138752</length>                 
