@@ -70,12 +70,19 @@ void setup()
 
 int main (void) {
     setup();
-    
+    lcd_init();
     while (1) {
-        DEBUG = 1;
+        /*
+         
+         DEBUG = 1;
         delay_us(500);
         DEBUG = 0;
         delay_us(500);
+         
+         */
+        
+        lcd_printRegister(AD1PCFG);
+        delay_us(500000);
     }
     //lcd_print("Hello Akbar!", 12, 0, 0);
     

@@ -1,6 +1,17 @@
 #ifndef ADC_H
 #define ADC_H
 
+/*
+ 
+ * Considerations:
+ * ADC interrupts must read from the buffer THEN clear AFTER the buffer is read.
+
+ 
+ 
+ */
+
+
+
 void configANPins();
 void configIntoMux();
 void setOutputFormat();
