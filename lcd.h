@@ -35,5 +35,6 @@ void lcd_scroll(int RL);
 int lcd_busy();
 void lcd_clear();
 void lcd_setDD(int address);
+void lcd_printRegister(int register);
 
 #endif

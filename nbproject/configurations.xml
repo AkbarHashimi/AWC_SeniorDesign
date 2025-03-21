@@ -10,6 +10,7 @@
       <itemPath>misc.h</itemPath>
       <itemPath>motor.h</itemPath>
       <itemPath>adc.h</itemPath>
+      <itemPath>timers.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -31,6 +32,7 @@
       <itemPath>misc.c</itemPath>
       <itemPath>motor.c</itemPath>
       <itemPath>adc.c</itemPath>
+      <itemPath>timers.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -43,7 +45,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PK5Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>4.60</languageToolchainVersion>
+        <languageToolchainVersion>4.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

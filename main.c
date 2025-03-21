@@ -4,7 +4,8 @@
 #include "lcd.h"
 #include "keypad.h"
 #include "misc.h"
-//#include "motor.h"
+//#include "motor.h"0
+
 
 #define KD0 LATBbits.LATB8  //pin 21
 #define KD1 LATBbits.LATB9  //pin 22
@@ -21,7 +22,7 @@
 void setup()
 {
     
-    AD1PCFG = 0xFF03;
+    AD1PCFG = 0x0000FF03;
     CVRCON = 0x00000200;
     DDPCON = 0x00000000;
     //0 == output
@@ -70,13 +71,15 @@ void setup()
 int main (void) {
     setup();
     
-    DEBUG = 0;
+    while (1) {
+        DEBUG = 1;
+        delay_us(500);
+        DEBUG = 0;
+        delay_us(500);
+    }
+    //lcd_print("Hello Akbar!", 12, 0, 0);
     
-    delay(1000000);
-    
-    lcd_init();
-    lcd_clear();
-    
+    /*
     char input = 'N';
     int position = 0;
     
@@ -95,5 +98,5 @@ int main (void) {
        }
         delay(1000000);
     }
-    
+    */
 }

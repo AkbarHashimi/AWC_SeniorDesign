@@ -151,3 +151,17 @@ void lcd_print(char string[], int size, int row, int column) {
 	
 	return;
 }
+
+void lcd_printRegister(int address) {
+    lcd_clear();
+    int temp;
+    for (int i = 0; i < 8; i++) {
+        temp = (address >> ((7 - i) << 2)) & 0xF;
+        if (temp > 10) {
+            lcd_printChar(0x37 + temp);
+        } else {
+            lcd_printChar(0x30 + temp);
+        }
+    }
+    return;
+}
