@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Snake/MPLABXProjects/AWC/main.c</file>
             <file>file:/C:/Users/Snake/MPLABXProjects/AWC/adc.h</file>
             <file>file:/C:/Users/Snake/MPLABXProjects/AWC/adc.c</file>
+=======
+            <file>file:/C:/Users/CMPE492/MPLABXProjects/Senior-Design-2025/interrupts.h</file>
+            <file>file:/C:/Users/CMPE492/MPLABXProjects/Senior-Design-2025/interrupts.c</file>
+>>>>>>> 327973dea374554f39a7223dac0741e11701f96b
         </group>
     </open-files>
 </project-private>

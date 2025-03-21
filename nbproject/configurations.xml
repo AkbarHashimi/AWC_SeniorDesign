@@ -10,6 +10,11 @@
       <itemPath>misc.h</itemPath>
       <itemPath>motor.h</itemPath>
       <itemPath>adc.h</itemPath>
+<<<<<<< HEAD
+=======
+      <itemPath>timers.h</itemPath>
+      <itemPath>interrupts.h</itemPath>
+>>>>>>> 327973dea374554f39a7223dac0741e11701f96b
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -31,6 +36,11 @@
       <itemPath>misc.c</itemPath>
       <itemPath>motor.c</itemPath>
       <itemPath>adc.c</itemPath>
+<<<<<<< HEAD
+=======
+      <itemPath>timers.c</itemPath>
+      <itemPath>interrupts.c</itemPath>
+>>>>>>> 327973dea374554f39a7223dac0741e11701f96b
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
