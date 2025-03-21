@@ -32,8 +32,8 @@
 #pragma config FVBUSONIO = OFF          // USB VBUS ON Selection (Controlled by Port Function)
 
 // DEVCFG2
-#pragma config FPLLIDIV = DIV_4         // PLL Input Divider (1x Divider)
-#pragma config FPLLMUL = MUL_16         // PLL Multiplier (16x Multiplier)
+#pragma config FPLLIDIV = DIV_2         // PLL Input Divider (1x Divider)
+#pragma config FPLLMUL = MUL_18         // PLL Multiplier (16x Multiplier)
 #pragma config UPLLIDIV = DIV_1         // USB PLL Input Divider (1x Divider)
 #pragma config UPLLEN = OFF             // USB PLL Enable (Disabled and Bypassed)
 #pragma config FPLLODIV = DIV_1         // System PLL Output Clock Divider (PLL Divide by 1)
