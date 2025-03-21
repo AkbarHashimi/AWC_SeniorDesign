@@ -3,34 +3,34 @@
 #include "lcd.h"
 #include "misc.h"
 
-void delay(int num){
+void delay(int num){ //mostly obsolete version of the delay funcitons below
     for (int i = 0; i < num; i++){
         _nop();      
     }
 }
 
-void delay_us(int us) {
+void delay_us(int us) { //accurate to +- 1 us
     for (int i = 0; i < (2 * us) - 1; i++) {
         _nop();
     }
 }
 
-void delay_ms(int ms) {
+void delay_ms(int ms) { //accurate to +- 1 ms
     for (int i = 0; i < (2000 * ms); i++) {
         _nop();
     }
 }
 
 void misc_blinkDebug(int numTimes) {
-    
-    for (int i = 0; i < numTimes; i++) {
-    DEBUG = 1;
-    delay(1000000);
-    DEBUG = 0;
-    delay(1000000);
+    for (int i = 0; i < numTimes; i++) { //blink debug n times
+        DEBUG = 1;
+        delay(1000000);
+        DEBUG = 0;
+        delay(1000000);
     }
     return;
 }
+
 int misc_modifyTotal(int total, char input) {
 
     //takes parameter total and updates it depending on the inputted character
@@ -61,35 +61,30 @@ int misc_modifyTotal(int total, char input) {
 }
 int misc_getBatchSize(char message[], int size) { 
 
-	//will be inside main 
-	//it's purpose is to return the value we are asking for in "message"
+	//returns the value asked for in message[]
     
-    //scans for keypad input until 'E' or "enter" is pressed
-    //if button pressed is not enter, tracks the character user touched
-    //outputs this character on the LCD screen for user convenience
-    //numerical total is kept track via 
-    //characters can be deleted, and changes are t
-    //tracks the total by converting
+    //Scans for keypad input until user presses a button
+    //If the user selected a digit, print that digit on the screen,
+    //  and keep an accumulating, numerical total
+    //If the user chose to delete, replace the last character with a space
+    //If the user chooses to exit, the loop ends, and the total is returned
 
-	lcd_clear(); 						//clear after booting
-	lcd_print(message, size, 1, 1);			//prompt user to input
-	lcd_setDD(0x40);					//place cursor on second row
+	lcd_clear(); 						
+	lcd_print(message, size, 0, 0); //prompt the user			
+	lcd_setDD(0x40);                //place cursor on second row
 
-	int position = 1;	//for cursor position in LCD row
+	int position = 0;	//for cursor position in LCD row
 	char input = 'N';	//stores user input
 	int total = 0;		//stores total value
-	
 
 	do {
 		input = kp_scanForInput(); 				//check for button input
-												//returns null if no buttons pressed
 												
 		if (input == 'N') { 					//if no valid buttons pressed
-			continue;							//do nothing and rescan		
+			continue;							//do nothing and rescan	
 		}
 
 		total = misc_modifyTotal(total, input);		//returns total after appending/deleting new input
-		
 		
 		if (input == 'D' && position > 1) { 	//if we are deleting,
 			position = position - 1; 			//go to previous character
@@ -97,11 +92,11 @@ int misc_getBatchSize(char message[], int size) {
             lcd_printChar(' ');                 //print empty character (delete character)
             lcd_setDD(0x40 + position);         //move cursor back over empty space
 			
-		} else if (input != 'E') {              //if not deleted and not entering,
+		} else if (input != 'E') {              //if not deleting or entering,
             lcd_printChar(input);               //print numerical character
         }
 
-		//delay_ms(500); //make our own delay function
+		delay_ms(500); //delay so one button pressed isn't accidentally read twice
 
 	} while (input != 'E');
 	return total; //return entered amount to main
@@ -124,7 +119,7 @@ void testLCD() {
     lcd_clear();
     
     lcd_print("Testing?", 8, 0, 0);
-    delay(1000000);
+    delay_ms(1000*10);
     
     lcd_setDD(0x00 + 7);
     lcd_printChar('!');

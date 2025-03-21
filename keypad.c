@@ -47,10 +47,13 @@ char kp_getSymbol(int row, int column) {
 
 char kp_scanForInput() {
     
-    //loop across every keypad input port to test for connection
-    //connection established when button is pressed
-    //row and column of button press is determined as we loop
-    //the corresponding character is returned from getSymbol()
+    //The keypad is a 4x4 grid of wires that do not connect until a button is pushed
+    //4 pins serve as "driving" pins, and 4 as "input" pins
+    //Only 1 driving pin will output a logic high voltage at a time
+    //We test the 4 input ports to see if any connection was made
+    //If found, translate into character
+    //Return the character
+
     
     //keypad drive pins start at RB8
     //keypad-in bits start at RB12 

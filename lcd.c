@@ -1,6 +1,3 @@
-//Custom LCD functions for CMPE492 - Spring 2025
-//Derived from HD44780U datasheet
-
 #include <xc.h>
 #include "lcd.h"
 #include "misc.h"
@@ -12,7 +9,7 @@ void lcd_setSignals(int rs, int rw, int d7a, int d6a, int d5a,
     //Performing functions on the LCD requires a specific setup from the signals above
     //Flicking the enable bit will send this instruction into the HD44780U
     
-	//Implemented for 4-bit communication
+	//Will be implemented for 4-bit communication
 	//This means that DB3:DB0 are not used when sending instructions to LCD
 	//So we cannot write the whole byte DB7:DB0 in one go
 	//Instead, DB7:DB4 will send the upper four bits, and then the bottom four bits.
@@ -30,29 +27,13 @@ void lcd_setSignals(int rs, int rw, int d7a, int d6a, int d5a,
 	DB1 = d5b; 
 	DB0 = d4b;
 	E = 1;
-	delay(100000); //pause for instruction to run
+	delay_us(40);; //pause for instruction to run
 	E = 0;
 	return;
 }
 
-/*
-//Our primary interest is to print strings and characters onto the LCD:
-
-void lcd_print(char message[], int size, int row, int column);
-void lcd_printChar(char character);
-
-//But preliminary and auxiliary functions are necessary:
-
-void lcd_init();
-void lcd_shiftCursor(int RL);
-void lcd_scroll(int RL);
-int lcd_busy();
-void lcd_clear();
-void lcd_setDD(int address);
-
-*/
-
 void lcd_init() {
+    delay_ms(1);
 	//function set: {0, 0, 0, 0, 1, DL, N, F, *, *}; * = don't care
 	//DL = 0: 4 bit communication
 	//N = 1: 2 lines on LCD
@@ -81,19 +62,36 @@ void lcd_shiftCursor(int RL) {
 }
 
 int lcd_busy() {
+    //There is only one instance when our LCD outputs at its pins
+    //"Reading" (RW=1) from the instruction register (RS=0) makes DB0-7 output data
+    //This includes the current AC value, but we should know that beforehand
 	lcd_setSignals(0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
 	TRISBbits.TRISB7 = 1;    //set RB7 to input before reading busy flag
+    delay_us(2);
     int val = PORTBbits.RB7; //read busy flag
     TRISBbits.TRISB7 = 0;    //B7 back to output
 	return val;
 }
 
 void lcd_clear() {
+    //Write this function into the instruction register, it does it's own thing
 	lcd_setSignals(0, 0, 0, 0, 0, 0, 0, 0, 0, 1); //clear screen command
-	return;
+	delay_ms(1);//longer delay afterward, as specified in the data sheet
+    return;
 }
 
 void lcd_setDD(int address) {
+    //There is one Address Counter (AC) in the LCD's hardware
+    //This AC can point to two different memory stacks:
+        //Display Data Ram (DDRAM):
+            //Each address holds a byte-sized ASCII character code
+            //Each address is mapped to a cell on the LCD
+                //e.g. DDRAM[0x00] is the top left (0, 0) corner cell of the LCD
+        //Character Generator Ram
+            //The ASCII code stored in CGRAM is converted 5x8 dots
+            //Translates representation to physical shape
+    //We can set the AC to a specific address
+        //We can print to a designated cell on the LCD
     int d4b = (address >> 0) & 0x01;
     int d5b = (address >> 1) & 0x01;
     int d6b = (address >> 2) & 0x01;
@@ -108,18 +106,15 @@ void lcd_setDD(int address) {
 }
 
 void lcd_printChar(char character) { 
-    //characters can be represented in binary <'1' == 00110001b>, and are explicitly in C
+    //characters are represented in binary ('1' == 0b00110001)
     //We need to print the character onto LCD by putting it's binary representation into the DDRAM
-    //So the setup for the LCD to write into DDRAM {1, 0, b0, b1, b2, b3, b4, b5, b6, b7, b8}
+    //Setup for function Print to DDRAM: {1, 0, b0, b1, b2, b3, b4, b5, b6, b7, b8}
     //Setting the DDRAM address tells the LCD to start writing into DDRAM, and not CGRAM
-    //Boundaries for LCD row: top[0x00:0x27], bottom[0x40, 0x67]
-    //By default, the first index prints the character immediately to the first cell of the LCD
 
     //So:
     //Break character into binary digits
     //Set up outputs for writeToDDRAM() <1, 0, b0, b1, b2, b3, b4, b5, b6, b7, b8>
     //Set enable bit
-
     
 	int d7a = (character >> 7) & 0b1; //high- order bits first
 	int d6a = (character >> 6) & 0b1;
@@ -137,22 +132,23 @@ void lcd_printChar(char character) {
 void lcd_print(char string[], int size, int row, int column) {
 	//We can assume that the user knows that writing over the lines can be scrolled over to
 	//Write to AC: {0, 0, 1, ADD, ADD, ADD, ADD, ADD, ADD, ADD}
-	
     
+    //Boundaries for LCD row: top[0x00:0x27], bottom[0x40, 0x67]
+	
 	int address = (row * 0x40) + column; //first term will be 0 if row is 1, so we start at 0x00 before adding columns
 	address = address - 1; //AC increments after writing this instruction
 	
 	lcd_setDD(address);
-    
 	
 	for (int i = 0; i < size; i++) {
 		lcd_printChar(string[i]);
 	}
-	
+    
 	return;
 }
 
 void lcd_printRegister(int address) {
+    //Takes the contents of a register and prints it in hex onto the LCD
     lcd_clear();
     int temp;
     for (int i = 0; i < 8; i++) {

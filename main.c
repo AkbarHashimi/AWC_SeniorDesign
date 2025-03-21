@@ -4,7 +4,7 @@
 #include "lcd.h"
 #include "keypad.h"
 #include "misc.h"
-//#include "motor.h"0
+#include "motor.h"
 
 
 #define KD0 LATBbits.LATB8  //pin 21
@@ -25,6 +25,7 @@ void setup()
     AD1PCFG = 0x0000FF03;
     CVRCON = 0x00000200;
     DDPCON = 0x00000000;
+    //ETHCON1 = 0x00002000;
     //0 == output
     //1 == input
     
@@ -54,6 +55,9 @@ void setup()
     LATBbits.LATB15 = 0;
     
     //LCD pins:
+    TRISDbits.TRISD0 = 0;
+    TRISCbits.TRISC13 = 1;
+    TRISCbits.TRISC14 = 1;
     TRISDbits.TRISD1 = 0;
     TRISDbits.TRISD2 = 0;
     TRISDbits.TRISD3 = 0;
@@ -62,41 +66,29 @@ void setup()
     TRISDbits.TRISD6 = 0;
     TRISDbits.TRISD7 = 0;
     TRISFbits.TRISF0 = 0;
-    TRISFbits.TRISF1 = 0;
+    
+    //motor pins:
     TRISEbits.TRISE0 = 0;
     TRISEbits.TRISE1 = 0;
-    
+    TRISEbits.TRISE2 = 0;
+    TRISEbits.TRISE3 = 0;
+    TRISEbits.TRISE4 = 0;
 }
 
 int main (void) {
     setup();
     
+    DEBUG = 1;
+    
+    PS = 1;
     while (1) {
-        DEBUG = 1;
-        delay_us(500);
-        DEBUG = 0;
-        delay_us(500);
+        motor_stepFeeder(40);
     }
-    //lcd_print("Hello Akbar!", 12, 0, 0);
-    
+    //lcd_print("Hello Riley.", 12, 0, 0);
     /*
-    char input = 'N';
-    int position = 0;
-    
-    while (input != 'E') {
-        input = kp_scanForInput();
-        if (input == 'N' || input == 'E') {
-            continue;
-       } else if (input == 'D' && position > 0) {
-           position -= 1;
-           lcd_setDD(position);
-           lcd_printChar(' ');
-           lcd_setDD(position);
-       } else {
-           lcd_printChar(input);
-           position += 1;
-       }
-        delay(1000000);
+    while (1) {
+        DEBUG = !DEBUG;
+        motor_stepFeeder(1);
     }
     */
 }

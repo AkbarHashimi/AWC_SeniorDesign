@@ -54,20 +54,20 @@ void motor_stepCutterUp() {
 
 void motor_stepFeeder(int steps) {
 	for (int i = 0; i < steps; i++) {
-		if (PHASE1 == 1) {
-		if (PHASE2 == 1) {
-			PHASE1 = 0;
-		} else {
-			PHASE2 = 1;
-		}
-	} else {
-		if (PHASE2 == 1) {
-			PHASE2 = 0;
-		} else {
-			PHASE1 = 1;
-		}
-	}
-        //delay_ms(250); //crucial delay
+        if (PHASE1 == 1) {
+            if (PHASE2 == 1) {
+                PHASE1 = 0;
+            } else {
+                PHASE2 = 1;
+            }
+        } else {
+            if (PHASE2 == 1) {
+                PHASE2 = 0;
+            } else {
+                PHASE1 = 1;
+            }
+        }
+        delay_ms(50); //crucial delay
 						 //very exaggerated for testing purposes
 	}
 }
@@ -79,14 +79,15 @@ void motor_feed(int distance) { //distance in centimeters, can only be int input
 }
 
 void motor_cut() {
+    //Motor turns downward rapidly to cut wire
+    //Moves back up to original position
 	int numSteps = cutting_distance / dps;
 	for (int i = 0; i < numSteps; i++) {
 		motor_stepCutterDown();
-		//delay_ms(100); //shorter delay for faster cutting speed
+		delay_ms(100); //shorter delay for faster cutting speed
 	}
-	
 	for (int i = 0; i < numSteps; i++) {
 		motor_stepCutterUp();
-		//delay_ms(200); //slightly relaxed journey back to resting position
+		delay_ms(500); //slightly relaxed journey back to resting position
 	}
 }
