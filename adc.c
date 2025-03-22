@@ -103,11 +103,11 @@ void setOutputFormat()
     
 }
 
-void setSampleClockSource()
+void setSampleConvTrigger()
 {
     //Setting the conversion trigger source selection bits
     
-    AD1CON1SET = 0x0000000E;
+    AD1CON1SET = 0x000000E0;
 }
 
 void setVoltageRefs()
@@ -149,7 +149,7 @@ void setBufferFillMode()
     AD1CON2CLR = 0x00000002;
 }
 
-void setADCClockPrescaler()
+void configADC_Clock()
 {
     //Select the ADC Conversion Clock and Prescaler
     //We are using PBCLK and scaling it down from 72 MHz to 4 MHz
