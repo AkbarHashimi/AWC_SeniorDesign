@@ -86,6 +86,7 @@ void setAlternateMode()
      The order is initially at A, then swaps to B, then back to A, and repeat     
      */
     
+    
     AD1CON2SET = 0x00000001;
     
     
@@ -102,3 +103,62 @@ void setOutputFormat()
     
 }
 
+void setSampleClockSource()
+{
+    //Setting the conversion trigger source selection bits
+    
+    AD1CON1SET = 0x0000000E;
+}
+
+void setVoltageRefs()
+{
+    //Set voltage reference source
+    //VREFH = AVDD
+    //VREFL = AVSS
+    
+    AD1CON2CLR = 0x0000A000;
+    
+}
+
+void selectScanMode()
+{
+    //Disable scan mode
+    
+    AD1CON2CLR = 0x00000400;
+}
+
+void setConvPerInterrupt()
+{
+    //Here we take 2 conversions before we generate an Interrupt
+    
+    //We want SMPI <3:0> 0001
+    
+    AD1CON2CLR = 0x00000038;
+    AD1CON2SET = 0x00000004;
+}
+
+void setBufferFillMode()
+{
+    //There are two modes:
+    //1. Use buffers of size 16
+    //2. use buffers of size 8
+    
+    //Depending 
+    //For now we are choosing size 16
+    
+    AD1CON2CLR = 0x00000002;
+}
+
+void setADCClockPrescaler()
+{
+    //Select the ADC Conversion Clock and Prescaler
+    //We are using PBCLK and scaling it down from 72 MHz to 4 MHz
+    
+    //set bits for ADC conversion clock prescaler
+    
+    AD1CON3SET = 0x00000011; //divide by 18
+    
+    //clear bits for both prescaler and ADC Conversion Clock Source bit
+    
+    AD1CON3CLR = 0x000080EE;
+}

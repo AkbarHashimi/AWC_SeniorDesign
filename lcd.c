@@ -30,7 +30,7 @@ void lcd_setSignals(int rs, int rw, int d7a, int d6a, int d5a,
 	DB1 = d5b; 
 	DB0 = d4b;
 	E = 1;
-	delay(100000); //pause for instruction to run
+	delay_us(50); //pause for instruction to run
 	E = 0;
 	return;
 }
@@ -90,17 +90,18 @@ int lcd_busy() {
 
 void lcd_clear() {
 	lcd_setSignals(0, 0, 0, 0, 0, 0, 0, 0, 0, 1); //clear screen command
+    delay_ms(5);
 	return;
 }
 
 void lcd_setDD(int address) {
-    int d4b = (address >> 0) & 0x01;
-    int d5b = (address >> 1) & 0x01;
-    int d6b = (address >> 2) & 0x01;
-    int d7b = (address >> 3) & 0x01;
-    int d4a = (address >> 4) & 0x01;
-    int d5a = (address >> 5) & 0x01;
-	int d6a = (address >> 6) & 0x01; 
+    int d4b = (address >> 0) & 0b1;
+    int d5b = (address >> 1) & 0b1;
+    int d6b = (address >> 2) & 0b1;
+    int d7b = (address >> 3) & 0b1;
+    int d4a = (address >> 4) & 0b1;
+    int d5a = (address >> 5) & 0b1;
+	int d6a = (address >> 6) & 0b1; 
 	
 	lcd_setSignals(0, 0, 1, d6a, d5a, d4a, d7b, d6b, d5b, d4b);
 
@@ -140,11 +141,9 @@ void lcd_print(char string[], int size, int row, int column) {
 	
     
 	int address = (row * 0x40) + column; //first term will be 0 if row is 1, so we start at 0x00 before adding columns
-	address = address - 1; //AC increments after writing this instruction
 	
 	lcd_setDD(address);
     
-	
 	for (int i = 0; i < size; i++) {
 		lcd_printChar(string[i]);
 	}
@@ -153,11 +152,10 @@ void lcd_print(char string[], int size, int row, int column) {
 }
 
 void lcd_printRegister(int address) {
-    lcd_clear();
     int temp;
     for (int i = 0; i < 8; i++) {
         temp = (address >> ((7 - i) << 2)) & 0xF;
-        if (temp > 10) {
+        if (temp > 9) {
             lcd_printChar(0x37 + temp);
         } else {
             lcd_printChar(0x30 + temp);

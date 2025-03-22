@@ -4,7 +4,9 @@
 #include "lcd.h"
 #include "keypad.h"
 #include "misc.h"
-//#include "motor.h"0
+#include "motor.h"
+#include "timers.h"
+#include "adc.h"
 
 
 #define KD0 LATBbits.LATB8  //pin 21
@@ -25,6 +27,7 @@ void setup()
     AD1PCFG = 0x0000FF03;
     CVRCON = 0x00000200;
     DDPCON = 0x00000000;
+    OSCCONCLR = 0xFFFFFFFF;
     //0 == output
     //1 == input
     
@@ -54,6 +57,9 @@ void setup()
     LATBbits.LATB15 = 0;
     
     //LCD pins:
+    TRISDbits.TRISD0 = 0;
+    TRISCbits.TRISC13 = 0;
+    TRISCbits.TRISC14 = 0;
     TRISDbits.TRISD1 = 0;
     TRISDbits.TRISD2 = 0;
     TRISDbits.TRISD3 = 0;
@@ -62,41 +68,24 @@ void setup()
     TRISDbits.TRISD6 = 0;
     TRISDbits.TRISD7 = 0;
     TRISFbits.TRISF0 = 0;
-    TRISFbits.TRISF1 = 0;
-    TRISEbits.TRISE0 = 0;
-    TRISEbits.TRISE1 = 0;
     
 }
 
 int main (void) {
     setup();
+    lcd_init();
+    
+    lcd_clear();
+    
+    lcd_print("TMR3:", 5, 0, 0);
+    setTimer3(0xFFFF);
+    
+    int flag = (INFS0 >> 8) & 0b1;
     
     while (1) {
-        DEBUG = 1;
-        delay_us(500);
-        DEBUG = 0;
-        delay_us(500);
+        lcd_setDD(0x40);
+        lcd_printRegister(TMR3);
+        delay_ms(500);
     }
-    //lcd_print("Hello Akbar!", 12, 0, 0);
     
-    /*
-    char input = 'N';
-    int position = 0;
-    
-    while (input != 'E') {
-        input = kp_scanForInput();
-        if (input == 'N' || input == 'E') {
-            continue;
-       } else if (input == 'D' && position > 0) {
-           position -= 1;
-           lcd_setDD(position);
-           lcd_printChar(' ');
-           lcd_setDD(position);
-       } else {
-           lcd_printChar(input);
-           position += 1;
-       }
-        delay(1000000);
-    }
-    */
 }
