@@ -31,7 +31,7 @@ DEP_GEN=${MP_JAVA_PATH}java -jar "C:/Program Files/Microchip/MPLABX/v6.25/mplab_
 MP_CC_DIR="C:\Program Files\Microchip\xc32\v4.60\bin"
 MP_CPPC_DIR="C:\Program Files\Microchip\xc32\v4.60\bin"
 # MP_BC_DIR is not defined
-MP_AS_DIR="C:\Program Files\Microchip\xc32\v4.50\bin"
-MP_LD_DIR="C:\Program Files\Microchip\xc32\v4.50\bin"
-MP_AR_DIR="C:\Program Files\Microchip\xc32\v4.50\bin"
-DFP_DIR=C:/Users/CMPE492/.mchp_packs/Microchip/PIC32MX_DFP/1.6.369
+MP_AS_DIR="C:\Program Files\Microchip\xc32\v4.60\bin"
+MP_LD_DIR="C:\Program Files\Microchip\xc32\v4.60\bin"
+MP_AR_DIR="C:\Program Files\Microchip\xc32\v4.60\bin"
+DFP_DIR=C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC32MX_DFP/1.6.369

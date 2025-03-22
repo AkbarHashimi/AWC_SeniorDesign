@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:.generated_files/flags/default/ab5e6b0fabee88ec793c407cdcfd821cb6a28c
- $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -fdata-sections -O1 -fno-common -Werror -Wall   -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  C:\Users\Snake\MPLABXProjects\AWC\testSensor.c
-========
- $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -fdata-sections -O1 -fno-common -Werror -Wall   -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  C:\Users\CMPE492\MPLABXProjects\Senior-Design-2025\misc.c
->>>>>>>> 327973dea374554f39a7223dac0741e11701f96b:.generated_files/flags/default/52829905031c38fb7f3f9d6e14ccafb8d18632cb
