@@ -173,3 +173,10 @@ void setSampleTime()
     AD1CON3CLR = 0x00001E00;
     
 }
+
+//Pre: ADC should be ON
+//Post: 
+void startSampling()
+{
+    AD1CON1bits.ASAM = 1;
+}
