@@ -27,6 +27,23 @@ void turnOffADC();
 //Note: use IFS1 to check if we are done
 //IFSx: Interrupt Flag Status register
 
+//Pre: ADC must be OFF
+//Post: 
+void adc_init()
+{
+    configANPins();
+    configIntoMux();
+    setAlternateMode();
+    setOutputFormat();
+    setSampleConvTrigger();
+    setVoltageRefs();
+    selectScanMode();
+    setConvPerInterrupt();
+    setBufferFillMode();
+    configADC_Clock();
+    setSampleTime();
+}
+
 void configANPins()
 {
     //set the digital pins first
