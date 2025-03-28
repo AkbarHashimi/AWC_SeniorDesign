@@ -195,3 +195,11 @@ void adc_on()
 {
     AD1CON1bits.ON = 1;
 }
+
+
+//Pre: None
+//Post: Turns ADC on
+void adc_off()
+{
+    AD1CON1bits.ON = 0;
+}
