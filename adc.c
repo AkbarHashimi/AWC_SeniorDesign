@@ -187,3 +187,11 @@ void stopSampling()
 {
     AD1CON1bits.ASAM = 0;
 }
+
+
+//Pre: adc_init() should be called first to initialize config registers
+//Post: Turns on ADC
+void adc_on()
+{
+    AD1CON1bits.ON = 1;
+}
