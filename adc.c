@@ -220,3 +220,10 @@ void adc_off()
 {
     AD1CON1bits.ON = 0;
 }
+
+//Pre: Set auto sample mode
+//Post:
+void setAutoSample()
+{
+    AD1CON1bits.ASAM = 1;
+}
