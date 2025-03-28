@@ -156,9 +156,16 @@ void configADC_Clock()
     
     //set bits for ADC conversion clock prescaler
     
-    AD1CON3SET = 0x00000011; //divide by 18
+    AD1CON3SET = 0x0000008; //divide by 9
     
     //clear bits for both prescaler and ADC Conversion Clock Source bit
     
-    AD1CON3CLR = 0x000080EE;
+    AD1CON3CLR = 0x000080F7;
+}
+
+//Pre: ADC must be OFF
+//Post: sets sample time of ADC
+void setSampleTime()
+{
+    
 }
