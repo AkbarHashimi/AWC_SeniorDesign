@@ -180,3 +180,10 @@ void startSampling()
 {
     AD1CON1bits.ASAM = 1;
 }
+
+//Pre: ADC should be ON
+//Post: 
+void stopSampling()
+{
+    AD1CON1bits.ASAM = 0;
+}
