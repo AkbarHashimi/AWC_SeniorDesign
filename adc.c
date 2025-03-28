@@ -1,4 +1,5 @@
 #include "adc.h"
+#include "misc.h"
 
 #include <xc.h>
 /*
@@ -33,7 +34,6 @@ void adc_init()
 {
     configANPins();
     configIntoMux();
-    setAlternateMode();
     setOutputFormat();
     setSampleConvTrigger();
     setVoltageRefs();
@@ -51,13 +51,13 @@ void configANPins()
     
     //CLR,SET, and INV registers only modify values with '1', values with '0' are unmodified
     
-    AD1PCFGSET = 0x0000FFF3; //all pins besides AN2 and AN3 are set to digital
-    AD1PCFGCLR = 0x0000000C; //make AN2 and AN3 analog input
+    AD1PCFGSET = 0x0000FFF8; //all pins besides AN2 and AN3 are set to digital
+    AD1PCFGCLR = 0x00000007; //make AN2 and AN3 analog input and AN12
     
     //Port B is where AN2 and AN3 are located
     //Set their TRIS bits to 1 to read as input
     
-    TRISBSET = 0x0000000C;
+    TRISBSET = 0x00000008;
     
     
     
@@ -87,27 +87,16 @@ void configIntoMux()
     */
     
     //First - Clear Bits
-    AD1CHSCLR = 0x8C8D0000;
+    AD1CHSCLR = 0x00830000;
             
     //Second - Set Bits
-    AD1CHSSET = 0x03020000;
+    AD1CHSSET = 0x00040000;
     
     
     
 }
 
-void setAlternateMode()
-{
-    /*    
-     In Order to read from both inputs we must go into Alternating Mode which swaps between MUX A and B
-     The order is initially at A, then swaps to B, then back to A, and repeat     
-     */
-    
-    
-    AD1CON2SET = 0x00000001;
-    
-    
-}
+
 
 void setOutputFormat()
 {
@@ -124,7 +113,7 @@ void setSampleConvTrigger()
 {
     //Setting the conversion trigger source selection bits
     
-    AD1CON1SET = 0x000000E0;
+    AD1CON1CLR = 0x000000F6;
 }
 
 void setVoltageRefs()
@@ -195,14 +184,14 @@ void setSampleTime()
 //Post: 
 void startSampling()
 {
-    AD1CON1bits.ASAM = 1;
+    AD1CON1bits.SAMP = 1;
 }
 
 //Pre: ADC should be ON
 //Post: 
 void stopSampling()
 {
-    AD1CON1bits.ASAM = 0;
+    AD1CON1bits.SAMP = 0;
 }
 
 
@@ -227,3 +216,17 @@ void setAutoSample()
 {
     AD1CON1bits.ASAM = 1;
 }
+
+
+int grabOneSample()
+{
+    startSampling();
+    delay_ms(100);
+    stopSampling();
+    
+    while (!(AD1CON1 & 0x0001));
+    int sampleVal = ADC1BUF0;
+    return sampleVal;
+    
+}
+

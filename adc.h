@@ -91,4 +91,8 @@ void startSampling();
 //Post:
 void setAutoSample();
 
+void sampleAndConvert();
+
+int grabOneSample();
+
 #endif

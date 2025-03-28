@@ -19,8 +19,6 @@
 #define KI2 PORTBbits.RB14  //pin 29
 #define KI3 PORTBbits.RB15  //pin 30
 
-#define DEBUG LATEbits.LATE5
-
 void setup()
 {
     
@@ -80,39 +78,20 @@ int main (void) {
     
     lcd_clear();
     
+    adc_on();
     
+    uint32_t sampleData;
     
     while (1) {
         
-        lcd_setDD(0x0);
-        lcd_print("AD1CON1",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CON1);
-        delay_ms(6000);
+        sampleData = grabOneSample();
         
         lcd_setDD(0x0);
-        lcd_print("AD1CON2",7,0,0);
+        lcd_print("SampleData",10,0,0);
         lcd_setDD(0x40);
-        lcd_printRegister(AD1CON2);
+        lcd_printRegister(sampleData);
         delay_ms(6000);
         
-        lcd_setDD(0x0);
-        lcd_print("AD1CON3",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CON3);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1CHS",6,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CHS);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1PCFG",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1PCFG); 
-        delay_ms(6000);
         
         
         

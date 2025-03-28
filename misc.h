@@ -1,6 +1,8 @@
 #ifndef MISC_H   /* Guard against multiple inclusion */
 #define MISC_H
 
+#include "xc.h"
+
 #define DEBUG LATEbits.LATE5
 
 void delay(int num);
