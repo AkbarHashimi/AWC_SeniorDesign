@@ -167,5 +167,9 @@ void configADC_Clock()
 //Post: sets sample time of ADC
 void setSampleTime()
 {
+    //SAMC set to 00001 - 1 Tad
+    
+    AD1CON3SET = 0x00000100;
+    AD1CON3CLR = 0x00001E00;
     
 }
