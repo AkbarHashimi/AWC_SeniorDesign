@@ -73,19 +73,49 @@ void setup()
 
 int main (void) {
     setup();
+    
+    adc_init();
+    
     lcd_init();
     
     lcd_clear();
     
-    lcd_print("TMR3:", 5, 0, 0);
-    setTimer3(0xFFFF);
     
-    int flag = (INFS0 >> 8) & 0b1;
     
     while (1) {
+        
+        lcd_setDD(0x0);
+        lcd_print("AD1CON1",7,0,0);
         lcd_setDD(0x40);
-        lcd_printRegister(TMR3);
-        delay_ms(500);
+        lcd_printRegister(AD1CON1);
+        delay_ms(6000);
+        
+        lcd_setDD(0x0);
+        lcd_print("AD1CON2",7,0,0);
+        lcd_setDD(0x40);
+        lcd_printRegister(AD1CON2);
+        delay_ms(6000);
+        
+        lcd_setDD(0x0);
+        lcd_print("AD1CON3",7,0,0);
+        lcd_setDD(0x40);
+        lcd_printRegister(AD1CON3);
+        delay_ms(6000);
+        
+        lcd_setDD(0x0);
+        lcd_print("AD1CHS",6,0,0);
+        lcd_setDD(0x40);
+        lcd_printRegister(AD1CHS);
+        delay_ms(6000);
+        
+        lcd_setDD(0x0);
+        lcd_print("AD1PCFG",7,0,0);
+        lcd_setDD(0x40);
+        lcd_printRegister(AD1PCFG); 
+        delay_ms(6000);
+        
+        
+        
     }
     
 }

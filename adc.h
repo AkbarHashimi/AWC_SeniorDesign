@@ -87,4 +87,8 @@ void stopSampling();
 //Post: 
 void startSampling();
 
+//Pre: Set auto sample mode
+//Post:
+void setAutoSample();
+
 #endif
