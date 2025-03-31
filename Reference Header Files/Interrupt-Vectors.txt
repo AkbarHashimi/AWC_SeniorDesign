@@ -1,0 +1,261 @@
+/* Vector Numbers */
+#define _CORE_TIMER_VECTOR                       0
+#define _CORE_SOFTWARE_0_VECTOR                  1
+#define _CORE_SOFTWARE_1_VECTOR                  2
+#define _EXTERNAL_0_VECTOR                       3
+#define _TIMER_1_VECTOR                          4
+#define _INPUT_CAPTURE_1_VECTOR                  5
+#define _OUTPUT_COMPARE_1_VECTOR                 6
+#define _EXTERNAL_1_VECTOR                       7
+#define _TIMER_2_VECTOR                          8
+#define _INPUT_CAPTURE_2_VECTOR                  9
+#define _OUTPUT_COMPARE_2_VECTOR                 10
+#define _EXTERNAL_2_VECTOR                       11
+#define _TIMER_3_VECTOR                          12
+#define _INPUT_CAPTURE_3_VECTOR                  13
+#define _OUTPUT_COMPARE_3_VECTOR                 14
+#define _EXTERNAL_3_VECTOR                       15
+#define _TIMER_4_VECTOR                          16
+#define _INPUT_CAPTURE_4_VECTOR                  17
+#define _OUTPUT_COMPARE_4_VECTOR                 18
+#define _EXTERNAL_4_VECTOR                       19
+#define _TIMER_5_VECTOR                          20
+#define _INPUT_CAPTURE_5_VECTOR                  21
+#define _OUTPUT_COMPARE_5_VECTOR                 22
+#define _I2C_3_VECTOR                            24
+#define _I2C_1A_VECTOR                           24
+#define _SPI_3_VECTOR                            24
+#define _SPI_1A_VECTOR                           24
+#define _UART_1_VECTOR                           24
+#define _UART_1A_VECTOR                          24
+#define _I2C_1_VECTOR                            25
+#define _CHANGE_NOTICE_VECTOR                    26
+#define _ADC_VECTOR                              27
+#define _PMP_VECTOR                              28
+#define _COMPARATOR_1_VECTOR                     29
+#define _COMPARATOR_2_VECTOR                     30
+#define _I2C_4_VECTOR                            31
+#define _I2C_2A_VECTOR                           31
+#define _SPI_2_VECTOR                            31
+#define _SPI_2A_VECTOR                           31
+#define _UART_3_VECTOR                           31
+#define _UART_2A_VECTOR                          31
+#define _I2C_5_VECTOR                            32
+#define _I2C_3A_VECTOR                           32
+#define _SPI_4_VECTOR                            32
+#define _SPI_3A_VECTOR                           32
+#define _UART_2_VECTOR                           32
+#define _UART_3A_VECTOR                          32
+#define _I2C_2_VECTOR                            33
+#define _FAIL_SAFE_MONITOR_VECTOR                34
+#define _RTCC_VECTOR                             35
+#define _DMA_0_VECTOR                            36
+#define _DMA_1_VECTOR                            37
+#define _DMA_2_VECTOR                            38
+#define _DMA_3_VECTOR                            39
+#define _USB_1_VECTOR                            45
+#define _CAN_1_VECTOR                            46
+#define _CAN_2_VECTOR                            47
+#define _UART_4_VECTOR                           49
+#define _UART_1B_VECTOR                          49
+#define _UART_6_VECTOR                           50
+#define _UART_2B_VECTOR                          50
+#define _UART_5_VECTOR                           51
+#define _UART_3B_VECTOR                          51
+#define _FCE_VECTOR                              44
+
+/* IRQ Numbers */
+#define _CORE_TIMER_IRQ                          0
+#define _CORE_SOFTWARE_0_IRQ                     1
+#define _CORE_SOFTWARE_1_IRQ                     2
+#define _EXTERNAL_0_IRQ                          3
+#define _TIMER_1_IRQ                             4
+#define _INPUT_CAPTURE_1_IRQ                     5
+#define _OUTPUT_COMPARE_1_IRQ                    6
+#define _EXTERNAL_1_IRQ                          7
+#define _TIMER_2_IRQ                             8
+#define _INPUT_CAPTURE_2_IRQ                     9
+#define _OUTPUT_COMPARE_2_IRQ                    10
+#define _EXTERNAL_2_IRQ                          11
+#define _TIMER_3_IRQ                             12
+#define _INPUT_CAPTURE_3_IRQ                     13
+#define _OUTPUT_COMPARE_3_IRQ                    14
+#define _EXTERNAL_3_IRQ                          15
+#define _TIMER_4_IRQ                             16
+#define _INPUT_CAPTURE_4_IRQ                     17
+#define _OUTPUT_COMPARE_4_IRQ                    18
+#define _EXTERNAL_4_IRQ                          19
+#define _TIMER_5_IRQ                             20
+#define _INPUT_CAPTURE_5_IRQ                     21
+#define _OUTPUT_COMPARE_5_IRQ                    22
+#define _I2C1A_ERR_IRQ                           26
+#define _I2C3_BUS_IRQ                            26
+#define _SPI1A_ERR_IRQ                           26
+#define _SPI3_ERR_IRQ                            26
+#define _UART1A_ERR_IRQ                          26
+#define _UART1_ERR_IRQ                           26
+#define _I2C1A_RX_IRQ                            27
+#define _I2C3_SLAVE_IRQ                          27
+#define _SPI1A_RX_IRQ                            27
+#define _SPI3_RX_IRQ                             27
+#define _UART1A_RX_IRQ                           27
+#define _UART1_RX_IRQ                            27
+#define _I2C1A_TX_IRQ                            28
+#define _I2C3_MASTER_IRQ                         28
+#define _SPI1A_TX_IRQ                            28
+#define _SPI3_TX_IRQ                             28
+#define _UART1A_TX_IRQ                           28
+#define _UART1_TX_IRQ                            28
+#define _I2C1_BUS_IRQ                            29
+#define _I2C1_SLAVE_IRQ                          30
+#define _I2C1_MASTER_IRQ                         31
+#define _CHANGE_NOTICE_IRQ                       32
+#define _ADC_IRQ                                 33
+#define _PMP_IRQ                                 34
+#define _COMPARATOR_1_IRQ                        35
+#define _COMPARATOR_2_IRQ                        36
+#define _I2C2A_ERR_IRQ                           37
+#define _I2C4_BUS_IRQ                            37
+#define _SPI2_ERR_IRQ                            37
+#define _SPI2A_ERR_IRQ                           37
+#define _UART2A_ERR_IRQ                          37
+#define _UART3_ERR_IRQ                           37
+#define _I2C2A_RX_IRQ                            38
+#define _I2C4_SLAVE_IRQ                          38
+#define _SPI2_RX_IRQ                             38
+#define _SPI2A_RX_IRQ                            38
+#define _UART2A_RX_IRQ                           38
+#define _UART3_RX_IRQ                            38
+#define _I2C2A_TX_IRQ                            39
+#define _I2C4_MASTER_IRQ                         39
+#define _SPI2A_TX_IRQ                            39
+#define _SPI2_TX_IRQ                             39
+#define _UART2A_TX_IRQ                           39
+#define _UART3_TX_IRQ                            39
+#define _I2C3A_ERR_IRQ                           40
+#define _I2C5_BUS_IRQ                            40
+#define _SPI3A_ERR_IRQ                           40
+#define _SPI4_ERR_IRQ                            40
+#define _UART2_ERR_IRQ                           40
+#define _UART3A_ERR_IRQ                          40
+#define _I2C3A_RX_IRQ                            41
+#define _I2C5_SLAVE_IRQ                          41
+#define _SPI3A_RX_IRQ                            41
+#define _SPI4_RX_IRQ                             41
+#define _UART2_RX_IRQ                            41
+#define _UART3A_RX_IRQ                           41
+#define _I2C3A_TX_IRQ                            42
+#define _I2C5_MASTER_IRQ                         42
+#define _SPI3A_TX_IRQ                            42
+#define _SPI4_TX_IRQ                             42
+#define _UART2_TX_IRQ                            42
+#define _UART3A_TX_IRQ                           42
+#define _FAIL_SAFE_MONITOR_IRQ                   46
+#define _RTCC_IRQ                                47
+#define _DMA0_IRQ                                48
+#define _DMA1_IRQ                                49
+#define _DMA2_IRQ                                50
+#define _DMA3_IRQ                                51
+#define _FLASH_CONTROL_IRQ                       56
+#define _USB_IRQ                                 57
+#define _CAN1_IRQ                                58
+#define _INPUT_CAPTURE_ERROR_1_IRQ               61
+#define _INPUT_CAPTURE_ERROR_2_IRQ               62
+#define _INPUT_CAPTURE_ERROR_3_IRQ               63
+#define _INPUT_CAPTURE_ERROR_4_IRQ               64
+#define _INPUT_CAPTURE_ERROR_5_IRQ               65
+#define _PMP_ERROR_IRQ                           66
+#define _UART1B_ERR_IRQ                          67
+#define _UART4_ERR_IRQ                           67
+#define _UART1B_RX_IRQ                           68
+#define _UART4_RX_IRQ                            68
+#define _UART1B_TX_IRQ                           69
+#define _UART4_TX_IRQ                            69
+#define _UART2B_ERR_IRQ                          70
+#define _UART6_ERR_IRQ                           70
+#define _UART2B_RX_IRQ                           71
+#define _UART6_RX_IRQ                            71
+#define _UART2B_TX_IRQ                           72
+#define _UART6_TX_IRQ                            72
+#define _UART3B_ERR_IRQ                          73
+#define _UART5_ERR_IRQ                           73
+#define _UART3B_RX_IRQ                           74
+#define _UART5_RX_IRQ                            74
+#define _UART3B_TX_IRQ                           75
+#define _UART5_TX_IRQ                            75
+
+/* Device Peripherals */
+#define _ADC10
+#define _BMX
+#define _CAN1
+#define _CFG
+#define _CMP
+#define _CMP1
+#define _CMP2
+#define _CVR
+#define _DMAC
+#define _DMAC0
+#define _DMAC1
+#define _DMAC2
+#define _DMAC3
+#define _I2C1
+#define _I2C1A
+#define _I2C2A
+#define _I2C3
+#define _I2C3A
+#define _I2C4
+#define _I2C5
+#define _ICAP1
+#define _ICAP2
+#define _ICAP3
+#define _ICAP4
+#define _ICAP5
+#define _INT
+#define _NVM
+#define _OCMP1
+#define _OCMP2
+#define _OCMP3
+#define _OCMP4
+#define _OCMP5
+#define _OSC
+#define _PCACHE
+#define _PMP
+#define _PORTB
+#define _PORTC
+#define _PORTD
+#define _PORTE
+#define _PORTF
+#define _PORTG
+#define _RCON
+#define _RTCC
+#define _SPI1A
+#define _SPI2
+#define _SPI2A
+#define _SPI3
+#define _SPI3A
+#define _SPI4
+#define _TMR1
+#define _TMR2
+#define _TMR23
+#define _TMR3
+#define _TMR4
+#define _TMR45
+#define _TMR5
+#define _UART1
+#define _UART1A
+#define _UART1B
+#define _UART2
+#define _UART2A
+#define _UART2B
+#define _UART3
+#define _UART3A
+#define _UART3B
+#define _UART4
+#define _UART5
+#define _UART6
+#define _USB
+#define _WDT
+#define __APPI
+#define __APPO
+#define __DDPSTAT
+#define __STRO

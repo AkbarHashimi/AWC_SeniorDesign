@@ -1,5 +1,7 @@
 #include <proc/ppic32mx.h>
 #include <proc/p32mx564f128h.h>
+#include <xc.h>
+#include <sys/attribs.h>
 
 /*  Set up Interrupt Controller
  * 
@@ -9,18 +11,30 @@ void setUpINTCON(void){
     
 }
 
+/*Disable Interrupts globally using builtin function
+ * 
+ */
+void diINT(void){
+    __builtin_disable_interrupts (void);
+}
+
+/*
+ * Enable Interrupts globally using builtin function
+ */
+void enINT(void){
+    __builtin_enable_interrupts (void);
+}
+
 
 /*  Setup ADC Interrupt Request
  *  IRQ Number = 33; Vector Number = 27
- *  Parameters:
- *      p is an integer between 0 to 7
- *      s is an integer between 0 to 3
+ *  Set FSRSSEL to 0b111, indicating Priority 7 Interrupts will be assigned SRS
  */
-void setUpADC(int p, int s){
+void setUpADC(){
     IEC1_AD1_BIT = 0b0; //Set Enable bit to 0
     IFS1_AD1_BIT = 0b0; //Set Flag bit to 0
-    IPC6bits.AD1IP = p; //Set priority for ADC Interrupt
-    IPC6bits.AD1IS = s; //Set sub-priority for ADC Interrupt
+    IPC6bits.AD1IP = 7; //Set priority for ADC Interrupt to 7
+    IPC6bits.AD1IS = 0; //Set sub-priority for ADC Interrupt to 0
 }
 
 
@@ -45,62 +59,158 @@ void diADCFlag(void){
 }
 
 
-/*  Setup ADC Interrupt Routine
- * 
+/*  ADC Interrupt Service Routine
+ *      ADC first reads the buffer, then clears the flag
  */
+void __ISR(_ADC_VECTOR, IPL7SRS) ADCHandler(void){
+    //Disable Interrupts
+    diINT();
+    
+    //Do some things
+    
+    //Read the buffer
+    
+    //Clear the flag
+    diADCFlag();
+    
+    //Enable Interrupts
+    enINT();
+}
 
-/*  Setup CP0 Timer Interrupt Request
- * 
- */
+//###########################################################################
 
-/*  Setup CP0 Timer Interrupt Routine
- * 
+/*  Setup Core Timer Interrupt
+ *  IRQ Number = 0; Vector Number = 0
+ *  Set FSRSSEL to 0b111, indicating Priority 7 Interrupts will be assigned SRS
  */
+void setUpCT(){
+    IEC0_CT_BIT = 0b0; //Set Enable bit to 0
+    IFS0_CT_BIT = 0b0; //Set Flag bit to 0
+    IPC0bits.CTIP = 5; //Set priority for ADC Interrupt to 7
+    IPC0bits.CTIS = 0; //Set sub-priority for ADC Interrupt to 0
+}
 
-/*  Setup Timer1 Interrupt Request
- * 
- */
+//Enable CT Interrupt
+void enCT(void){
+    IEC0_CT_BIT = 0b1;
+}
 
-/*  Setup Timer1 Interrupt Routine
- * 
- */
+//Disable CT Interrupt
+void diADC(void){
+    IEC0_CT_BIT = 0b0;
+}
 
-/*  Setup Timer2 Interrupt Request
- * 
- */
+//Enable CT Interrupt Flag
+void enCTFlag(void){
+    IFS0_CT_BIT = 0b1; //Set Flag bit to 1
+}
 
-/*  Setup Timer2 Interrupt Routine
- * 
- */
+//Disable CT Interrupt Flag
+void diCTFlag(void){
+    IFS0_CT_BIT = 0b0; //Set Flag bit to 0
+}
 
-/*  Setup Timer3 Interrupt Request
+/*  CP0 Timer Interrupt Routine
  * 
  */
+void __ISR(_CORE_TIMER_VECTOR, IPL4SOFT) CP0TimerHandler(void){
+    //Do something
+    
+    //Clear the flag
+    diCTFlag();
+}
 
-/*  Setup Timer3 Interrupt Routine
- * 
- */
+//###########################################################################
 
-/*  Setup Timer4 Interrupt Request
- * 
+/*  Setup Timer1 Interrupt
+ *  IRQ Number = 4; Vector Number = 4
+ *  Set FSRSSEL to 0b111, indicating Priority 7 Interrupts will be assigned SRS
  */
+void setUpT1(){
+    IEC0_T1_BIT = 0b0; //Set Enable bit to 0
+    IFS0_T1_BIT = 0b0; //Set Flag bit to 0
+    IPC1bits.T1IP = 5; //Set priority for ADC Interrupt to 7
+    IPC1bits.T1IS = 0; //Set sub-priority for ADC Interrupt to 0
+}
 
-/*  Setup Timer4 Interrupt Routine
- * 
- */
+//Enable T1 Interrupt
+void enT1(void){
+    IEC0_T1_BIT = 0b1;
+}
 
-/*  Setup Timer5 Interrupt Request
- * 
- */
+//Disable TMR1 Interrupt
+void diT1(void){
+    IEC0_T1_BIT = 0b0;
+}
 
-/*  Setup Timer5 Interrupt Routine
- * 
- */
+//Enable TMR1 Interrupt Flag
+void enT1Flag(void){
+    IFS0_T1_BIT = 0b1; //Set Flag bit to 1
+}
 
-/*  Setup Fail-Safe Clock Monitor Interrupt Request
- * 
- */
+//Disable TMR1 Interrupt Flag
+void diT1Flag(void){
+    IFS0_T1_BIT = 0b0; //Set Flag bit to 0
+}
 
-/*  Setup Fail-Safe Clock Monitor Interrupt Routine
+/*  Timer1 Interrupt Service Routine
  * 
  */
+void __ISR(_TIMER_1_VECTOR, IPL4SOFT) Timer1Handler(void){
+    //Do something
+    
+    //Clear the flag
+    diT1Flag();
+}
+
+//###########################################################################
+
+/*  Timer2 Interrupt Service Routine
+ * 
+ */
+void __ISR(_TIMER_2_VECTOR, IPL4SOFT) Timer2Handler(void){
+    //Do something
+    
+    //Clear the flag
+    
+}
+
+/*  Timer3 Interrupt Service Routine
+ * 
+ */
+void __ISR(_TIMER_3_VECTOR, IPL4SOFT) Timer3Handler(void){
+    //Do something
+    
+    //Clear the flag
+    
+}
+
+/*  Setup Timer4 Interrupt Service Routine
+ * 
+ */
+void __ISR(_TIMER_4_VECTOR, IPL4SOFT) Timer4Handler(void){
+    //Do something
+    
+    //Clear the flag
+    
+}
+
+/*  Setup Timer5 Interrupt Service Routine
+ * 
+ */
+void __ISR(_TIMER_5_VECTOR, IPL4SOFT) Timer5Handler(void){
+    //Do something
+    
+    //Clear the flag
+    
+}
+
+/*  Fail-Safe Clock Monitor Interrupt Service Routine
+ * 
+ */
+void __ISR(_FAIL_SAFE_MONITOR_VECTOR, IPL4SOFT) FSMHandler(void){
+    //Do something
+    
+    //Clear the flag
+    
+}
