@@ -126,7 +126,7 @@ void setVoltageRefs()
     //VREFH = AVDD
     //VREFL = AVSS
     
-    AD1CON2bits.VCFG = 0x0
+    AD1CON2bits.VCFG = 0x0;
     
 }
 
@@ -134,7 +134,7 @@ void selectScanMode()
 {
     //Disable scan mode
     
-    AD1CON2bits.CSCNA 0x0;
+    AD1CON2bits.CSCNA = 0x0;
 }
 
 void setConvPerInterrupt()
@@ -165,7 +165,7 @@ void configADC_Clock()
     
     //set bits for ADC conversion clock prescaler
     
-    AD1CON3bits.ADCS = 0x8 //divide by 9
+    AD1CON3bits.ADCS = 0x8; //divide by 9
     
     //clear bits for both prescaler and ADC Conversion Clock Source bit
     
