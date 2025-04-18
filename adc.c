@@ -51,13 +51,13 @@ void configANPins()
     
     //CLR,SET, and INV registers only modify values with '1', values with '0' are unmodified
     
-    AD1PCFGSET = 0x0000FFF8; //all pins besides AN2 and AN3 are set to digital
-    AD1PCFGCLR = 0x00000007; //make AN2 and AN3 analog input and AN12
+    AD1PCFGSET = 0x0000FFF3; //all pins besides AN2 and AN3 are set to digital
+    AD1PCFGCLR = 0x0000000C; //make AN2 and AN3 analog input and AN12
     
     //Port B is where AN2 and AN3 are located
     //Set their TRIS bits to 1 to read as input
     
-    TRISBSET = 0x00000008;
+    TRISBSET = 0x0000000C;
     
     
     
@@ -87,10 +87,10 @@ void configIntoMux()
     */
     
     //First - Clear Bits
-    AD1CHSCLR = 0x00830000;
+    AD1CHSCLR = 0x8C8D0000;
             
     //Second - Set Bits
-    AD1CHSSET = 0x00040000;
+    AD1CHSSET = 0x03020000;
     
     
     
