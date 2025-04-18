@@ -50,14 +50,15 @@ void configANPins()
     //setting AD1PCFG<n> = 1 will make it a digital input
     
     //CLR,SET, and INV registers only modify values with '1', values with '0' are unmodified
-    
+    AD1PCFGCLR = 0x0000000C;  //make AN2 and AN3 analog input and AN12
     AD1PCFGSET = 0x0000FFF3; //all pins besides AN2 and AN3 are set to digital
-    AD1PCFGCLR = 0x0000000C; //make AN2 and AN3 analog input and AN12
+
     
     //Port B is where AN2 and AN3 are located
     //Set their TRIS bits to 1 to read as input
     
-    TRISBSET = 0x0000000C;
+    TRISBbits.TRISB2 = 0b1;
+    TRISBbits.TRISB3 = 0b1;
     
     
     
@@ -86,11 +87,11 @@ void configIntoMux()
      
     */
     
-    //First - Clear Bits
-    AD1CHSCLR = 0x8C8D0000;
-            
-    //Second - Set Bits
-    AD1CHSSET = 0x03020000;
+    AD1CHSbits.CH0NA = 0b0;
+    AD1CHSbits.CH0NB = 0b0;
+    AD1CHSbits.CH0SA = 0x2;    
+    AD1CHSbits.CH0SB = 0x3; 
+    
     
     
     
@@ -105,15 +106,18 @@ void setOutputFormat()
     //only the 10 Least Significant (Rightmost) Bits are data
     
     
-    AD1CON1SET = 0x00000400;
+    AD1CON1bits.FORM = 0x4;
     
 }
 
 void setSampleConvTrigger()
 {
     //Setting the conversion trigger source selection bits
+    AD1CON1bits.SSRC = 0x0;
+    AD1CON1bits.CLRASAM = 0x0;
+    AD1CON1bits.ASAM = 0x0;
+    AD1CON1bits.SAMP = 0x0;   
     
-    AD1CON1CLR = 0x000000F6;
 }
 
 void setVoltageRefs()
@@ -122,7 +126,7 @@ void setVoltageRefs()
     //VREFH = AVDD
     //VREFL = AVSS
     
-    AD1CON2CLR = 0x0000A000;
+    AD1CON2bits.VCFG = 0x0
     
 }
 
@@ -130,7 +134,7 @@ void selectScanMode()
 {
     //Disable scan mode
     
-    AD1CON2CLR = 0x00000400;
+    AD1CON2bits.CSCNA 0x0;
 }
 
 void setConvPerInterrupt()
@@ -139,8 +143,7 @@ void setConvPerInterrupt()
     
     //We want SMPI <3:0> 0001
     
-    AD1CON2CLR = 0x00000038;
-    AD1CON2SET = 0x00000004;
+    AD1CON2bits.SMPI = 0x1;
 }
 
 void setBufferFillMode()
@@ -152,7 +155,7 @@ void setBufferFillMode()
     //Depending 
     //For now we are choosing size 16
     
-    AD1CON2CLR = 0x00000002;
+    AD1CON2bits.BUFM = 0b0;
 }
 
 void configADC_Clock()
@@ -162,11 +165,12 @@ void configADC_Clock()
     
     //set bits for ADC conversion clock prescaler
     
-    AD1CON3SET = 0x0000008; //divide by 9
+    AD1CON3bits.ADCS = 0x8 //divide by 9
     
     //clear bits for both prescaler and ADC Conversion Clock Source bit
     
-    AD1CON3CLR = 0x000080F7;
+    AD1CON3bits.ADRC = 0b0;
+    
 }
 
 //Pre: ADC must be OFF
@@ -175,8 +179,7 @@ void setSampleTime()
 {
     //SAMC set to 00001 - 1 Tad
     
-    AD1CON3SET = 0x00000100;
-    AD1CON3CLR = 0x00001E00;
+    AD1CON3bits.SAMC = 0b1;
     
 }
 
