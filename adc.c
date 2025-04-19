@@ -50,16 +50,18 @@ void configANPins()
     //setting AD1PCFG<n> = 1 will make it a digital input
     
     //CLR,SET, and INV registers only modify values with '1', values with '0' are unmodified
-    AD1PCFGCLR = 0x0000000C;  //make AN2 and AN3 analog input and AN12
-    AD1PCFGSET = 0x0000FFF3; //all pins besides AN2 and AN3 are set to digital
-
+    AD1PCFGbits.PCFG2 = 0b0;
+    AD1PCFGbits.PCFG3 = 0b0;
+    AD1PCFGbits.PCFG4 = 0b0;    
+    
+    
     
     //Port B is where AN2 and AN3 are located
     //Set their TRIS bits to 1 to read as input
     
     TRISBbits.TRISB2 = 0b1;
     TRISBbits.TRISB3 = 0b1;
-    
+    TRISBbits.TRISB4 = 0b1;
     
     
 }
@@ -225,7 +227,7 @@ int grabOneSample()
 {
     startSampling();
     delay_ms(100);
-    stopSampling();
+    stopSampling(); 
     
     while (!(AD1CON1 & 0x0001));
     int sampleVal = ADC1BUF0;
