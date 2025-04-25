@@ -7,6 +7,9 @@
 #define PHASE3 LATEbits.LATE3
 #define PHASE4 LATEbits.LATE4
 
+void motor_setFeederDirection(int direction);
+void motor_setCutterDirection(int direction);
+
 void motor_stepCutterDown();
 void motor_stepCutterUp();
 void motor_stepFeeder(int steps);

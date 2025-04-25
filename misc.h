@@ -8,7 +8,7 @@ void delay_us(int us);
 void delay_ms(int ms);
 void misc_blinkDebug(int numTimes);
 int misc_modifyTotal(int total, char input);
-int getBatchSize(char message[], int size);
+int misc_getBatchSize(char message[], int size);
 void testKeypad();
 void testLCD();
 

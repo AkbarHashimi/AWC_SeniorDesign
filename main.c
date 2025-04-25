@@ -69,53 +69,68 @@ void setup()
     TRISDbits.TRISD7 = 0;
     TRISFbits.TRISF0 = 0;
     
+    // motor pins:
+    TRISEbits.TRISE0 = 0;
+    TRISEbits.TRISE1 = 0;
+    TRISEbits.TRISE2 = 0;
+    TRISEbits.TRISE3 = 0;
+    TRISEbits.TRISE4 = 0;
+    
+}
+
+void loop() {
+    char input = 'N';
+    int steps = 0;
+    
+    int position = 0;
+    
+    lcd_clear();
+    lcd_print("Enter steps:", 12, 0, 0);
+    
+    lcd_setDD(0x40);
+    
+    while (input != 'E') {
+        input = kp_scanForInput();
+        
+        if (input == 'N') {
+            // nothing found
+            continue;
+        }
+        
+        // if valid button pushed, store result
+        steps = misc_modifyTotal(steps, input);
+        
+        // if we are deleting
+        if (input == 'D' && position > 0) {
+            position--;
+            lcd_setDD(0x40 + position);
+            lcd_printChar(' ');
+            lcd_setDD(0x40 + position);
+        } else if (input != 'E' && input != 'D') {
+            // if this is new number
+            position++;
+            lcd_printChar(input);
+        }
+         delay_ms(500);
+    }
+    PS = 1; // enable motors
+    delay_us(20);
+    // for demonstration, step motor # of steps
+    motor_stepFeeder(steps);
+    motor_cut();
+    PS = 0; //disable motors
 }
 
 int main (void) {
     setup();
     
-    adc_init();
+    //adc_init();
     
     lcd_init();
-    
-    lcd_clear();
-    
-    
+    PS = 0;
     
     while (1) {
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1CON1",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CON1);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1CON2",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CON2);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1CON3",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CON3);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1CHS",6,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1CHS);
-        delay_ms(6000);
-        
-        lcd_setDD(0x0);
-        lcd_print("AD1PCFG",7,0,0);
-        lcd_setDD(0x40);
-        lcd_printRegister(AD1PCFG); 
-        delay_ms(6000);
-        
-        
-        
+        loop();
     }
     
 }
