@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/lcd.h</file>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/config.h</file>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/lcd.c</file>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/main.c</file>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/adc.h</file>
-            <file>file:/C:/Users/Snake/MPLABXProjects/AWC/adc.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/misc.h</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/adc.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/keypad.h</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/interrupts.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/lcd.h</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/misc.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/lcd.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/main.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/interrupts.h</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/timers.c</file>
+            <file>file:/C:/Users/guidr/MPLABXProjects/SeniorDesign/keypad.c</file>
         </group>
     </open-files>
 </project-private>

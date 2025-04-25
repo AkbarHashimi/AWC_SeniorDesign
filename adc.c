@@ -42,6 +42,7 @@ void adc_init()
     setBufferFillMode();
     configADC_Clock();
     setSampleTime();
+    setAutoSample();
 }
 
 void configANPins()

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/default/production/AWC.production.elf">                 
+  <executable name="dist/default/production/SeniorDesign.production.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>138752</length>                 
-      <used>3720</used>                     
-      <free>135032</free>                     
+      <used>3160</used>                     
+      <free>135592</free>                     
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 

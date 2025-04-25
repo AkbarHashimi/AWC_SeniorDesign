@@ -7,6 +7,7 @@
 #include "motor.h"
 #include "timers.h"
 #include "adc.h"
+#include "interrupts.h"
 
 
 #define KD0 LATBbits.LATB8  //pin 21
@@ -20,6 +21,46 @@
 #define KI3 PORTBbits.RB15  //pin 30
 
 #define DEBUG LATEbits.LATE5
+
+ 
+
+/*  ADC Interrupt Service Routine
+ *      ADC first reads the buffer, then clears the flag
+ */
+void __ISR(_ADC_VECTOR, IPL7SRS) ADCHandler(){
+    __builtin_disable_interrupts();
+    //Do some things
+    LATEINV = 0b100000;        //Invert Debug LED
+    
+    int n = 5000000;              //Delay for a short period
+    while(n > 0){
+        n--;
+    }
+    
+    //Read the buffer
+    n = ADC1BUF2;
+    n = ADC1BUF3;
+    
+    //Clear the flag
+    diADCFlag(); 
+    __builtin_enable_interrupts();
+}
+
+
+/*  Timer1 Interrupt Service Routine
+ * 
+ */
+void __ISR(_TIMER_1_VECTOR, IPL5SOFT) Timer1Handler(){
+        //Do some things
+    //__builtin_disable_interrupts();
+    LATEbits.LATE5 = 0b1;        //Turn Debug LED on
+    
+    TMR1 = 0x0000;
+    
+    //Clear the flag
+    IFS0bits.T1IF  = 0b0;
+    //__builtin_enable_interrupts();
+}
 
 void setup()
 {
@@ -42,6 +83,7 @@ void setup()
     TRISBbits.TRISB14 = 1;
     TRISBbits.TRISB15 = 1;
     
+    //Set Debug LED
     TRISEbits.TRISE5 = 0;
     
     //keypad drivers:
@@ -123,14 +165,52 @@ void loop() {
 
 int main (void) {
     setup();
+
     
     //adc_init();
     
     lcd_init();
     PS = 0;
     
-    while (1) {
-        loop();
+
+    adc_init();
+    adc_on();
+    
+     
+    INTCONbits.MVEC = 0b1;  // Sets Interrupts to MultiVector Mode
+    //Set Up ADC Interrupt
+    IEC1bits.AD1IE = 0b0;   //Set Enable bit to 0
+    IFS1bits.AD1IF = 0b0;   //Set Flag bit to 0
+    IPC6bits.AD1IP = 7;     //Set priority for ADC Interrupt to 7
+    IPC6bits.AD1IS = 0;     //Set sub-priority for ADC Interrupt to 0
+    IEC1bits.AD1IE = 0b1;   //Enable ADC Interrupt
+    
+    //Set Up T1 Interrupt
+    IEC0bits.T1IE = 0b0;    //Set Enable bit to 0
+    IFS0bits.T1IF = 0b0;    //Set Flag bit to 0
+    IPC1bits.T1IP = 5;      //Set priority for T1 Interrupt to 5
+    IPC1bits.T1IS = 0;      //Set sub-priority for T1 Interrupt to 0
+    
+    //IEC0bits.T1IE  = 0b1;   //Enable T1 Interrupt
+    setTimer1(50000);
+    __builtin_enable_interrupts();
+    
+   
+    
+    //lcd_init();
+    
+    //lcd_clear();
+    
+    int n = 0;
+    
+    //TRISEbits.TRISE5 = 0b0;
+    LATEbits.LATE5 = 0b0;   //Turn Debug LED off
+    
+    while (1) {      
+        if(n == 0)
+                n = 5000;
+        else
+            n--;
     }
     
 }
