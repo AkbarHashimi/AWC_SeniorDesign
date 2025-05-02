@@ -47,18 +47,12 @@ void adc_init()
 
 void configANPins()
 {
-    //set the digital pins first
-    //setting AD1PCFG<n> = 1 will make it a digital input
+    AD1PCFGbits.PCFG2 = 0;
+    AD1PCFGbits.PCFG3 = 0;
     
-    //CLR,SET, and INV registers only modify values with '1', values with '0' are unmodified
+    TRISCbits.TRISC13 = 1;
+    TRISCbits.TRISC14 = 1;
     
-    AD1PCFGSET = 0x0000FFF3; //all pins besides AN2 and AN3 are set to digital
-    AD1PCFGCLR = 0x0000000C; //make AN2 and AN3 analog input
-    
-    //Port B is where AN2 and AN3 are located
-    //Set their TRIS bits to 1 to read as input
-    
-    TRISBSET = 0x0000000C;
     
     
     
@@ -87,11 +81,11 @@ void configIntoMux()
      
     */
     
-    //First - Clear Bits
-    AD1CHSCLR = 0x8C8D0000;
-            
-    //Second - Set Bits
-    AD1CHSSET = 0x03020000;
+    AD1CHSbits.CH0NA = 0;
+    AD1CHSbits.CH0NB = 0;
+    
+    AD1CHSbits.CH0SA = 0x2;
+    AD1CHSbits.CH0SB = 0x3;
     
     
     
@@ -105,7 +99,7 @@ void setAlternateMode()
      */
     
     
-    AD1CON2SET = 0x00000001;
+    AD1CON2bits.ALTS = 1;
     
     
 }
@@ -117,7 +111,7 @@ void setOutputFormat()
     //only the 10 Least Significant (Rightmost) Bits are data
     
     
-    AD1CON1SET = 0x00000400;
+    AD1CON1bits.FORM = 0x4;
     
 }
 

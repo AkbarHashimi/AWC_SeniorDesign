@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/default/debug/SeniorDesign.debug.elf">                 
+  <executable name="dist/default/debug/AWC.debug.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>138752</length>                 
-      <used>2128</used>                     
-      <free>136624</free>                     
+      <used>4448</used>                     
+      <free>134304</free>                     
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 
-      <length>32768</length>                 
-      <used>512</used>                     
+      <length>33280</length>                 
+      <used>1024</used>                     
       <free>32256</free>                     
     </memory>                              
   </executable>                            
