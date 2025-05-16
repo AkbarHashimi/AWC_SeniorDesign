@@ -1,11 +1,12 @@
 #include "xc.h"
 #include "motor.h"
 #include "misc.h"
+#include "pic32m_builtins.h"
 
 //stepper motor functions
 
-const float cutting_distance = 100; //distance knife will travel
-const float wheel_radius = .3;//in cm
+const float cutting_distance = 1; //distance knife will travel
+const float wheel_radius = .1;//in cm. Measured diameter = 20.08mm
 const float step_angle = 1.8; //in degrees
 								//from "SM_42BYG011-25"
 const float dps = step_angle * wheel_radius; //distance per step
@@ -26,7 +27,7 @@ int motor_states[4][2] = {
 };
 
 static int feeder_index = 0;
-static int feeder_direction = 1; // -1 for backward, 1 for forward
+static int feeder_direction = -1; // -1 for backward, 1 for forward
 
 static int cutter_index = 0;
 static int cutter_direction = 1; // -1 for backward, 1 for forward
@@ -48,6 +49,7 @@ void motor_setFeederDirection(int direction) {
 }
 
 void motor_stepCutter() {
+    __builtin_disable_interrupts(); // Disable interrupts for one step
 	cutter_index += cutter_direction;
     if (cutter_index > 3) {
         cutter_index = 0;
@@ -57,11 +59,13 @@ void motor_stepCutter() {
     
     PHASE3 = motor_states[cutter_index][0];
     PHASE4 = motor_states[cutter_index][1];
+    __builtin_enable_interrupts(); // Enable interrupts
 }
 
 void motor_stepFeeder(int steps) {
     // ~1600 us delay max
 	for (int i = 0; i < steps; i++) {
+        __builtin_disable_interrupts(); // Disable interrupts for one step
         feeder_index += feeder_direction;
         if (feeder_index > 3) {
             feeder_index = 0;
@@ -70,6 +74,7 @@ void motor_stepFeeder(int steps) {
         }
         PHASE1 = motor_states[feeder_index][0];
         PHASE2 = motor_states[feeder_index][1];
+        __builtin_enable_interrupts(); // Enable interrupts
         
         delay_us(5000);
 	}
@@ -91,8 +96,8 @@ void motor_cut() {
     cutter_direction = -(cutter_direction);
     delay_ms(250);
     
-	for (int i = 0; i < numSteps; i++) {
-		motor_stepCutter();
+	for (int i = 0; i < numSteps; i++) {        
+		motor_stepCutter();        
 		delay_us(2200); //slightly relaxed journey back to resting position
 	}
     

@@ -8,6 +8,8 @@
 #include "timers.h"
 #include "adc.h"
 #include "interrupts.h"
+#include "math.h"
+
 
 
 #define KD0 LATBbits.LATB8  //pin 21
@@ -65,7 +67,7 @@ void __ISR(_TIMER_1_VECTOR, IPL5SOFT) Timer1Handler(){
 void setup()
 {
     
-    AD1PCFG = 0x0000FF03;
+    AD1PCFG = 0x0000FFF3;
     CVRCON = 0x00000200;
     DDPCON = 0x00000000;
     OSCCONCLR = 0xFFFFFFFF;
@@ -99,17 +101,17 @@ void setup()
     LATBbits.LATB15 = 0;
     
     //LCD pins:
-    TRISDbits.TRISD0 = 0;
-    TRISCbits.TRISC13 = 0;
-    TRISCbits.TRISC14 = 0;
-    TRISDbits.TRISD1 = 0;
-    TRISDbits.TRISD2 = 0;
-    TRISDbits.TRISD3 = 0;
-    TRISDbits.TRISD4 = 0;
-    TRISDbits.TRISD5 = 0;
-    TRISDbits.TRISD6 = 0;
-    TRISDbits.TRISD7 = 0;
-    TRISFbits.TRISF0 = 0;
+    TRISDbits.TRISD1 = 0; //RS
+    TRISDbits.TRISD2 = 0; //RW
+    TRISDbits.TRISD3 = 0; //E
+    TRISDbits.TRISD11 = 0; //DB0
+    TRISDbits.TRISD10 = 0; //DB1
+    TRISDbits.TRISD9 = 0; //DB2
+    TRISDbits.TRISD8 = 0; //DB3
+    TRISDbits.TRISD4 = 0; //DB4
+    TRISDbits.TRISD5 = 0; //DB5
+    TRISDbits.TRISD6 = 0; //DB6
+    TRISDbits.TRISD7 = 0; //DB7
     
     // motor pins:
     TRISEbits.TRISE0 = 0;
@@ -165,18 +167,17 @@ void loop() {
 
 int main (void) {
     setup();
-
+    char input = 'N';
     
     //adc_init();
     
-    lcd_init();
     PS = 0;
     
 
-    adc_init();
-    adc_on();
+    //adc_init();
+    //adc_on();
     
-     
+     /*
     INTCONbits.MVEC = 0b1;  // Sets Interrupts to MultiVector Mode
     //Set Up ADC Interrupt
     IEC1bits.AD1IE = 0b0;   //Set Enable bit to 0
@@ -195,12 +196,101 @@ int main (void) {
     setTimer1(50000);
     __builtin_enable_interrupts();
     
+    */
    
     
-    //lcd_init();
+    lcd_init();
     
-    //lcd_clear();
+    while (1)
+    {
+        lcd_clear();
     
+        lcd_print("AWC Project", 11, 0, 0);
+        delay(6);
+    
+        lcd_clear();
+        
+        char accum [16];
+        accum[0] = '\0';
+        int indexAc = 0;
+    
+        while (input != 'E')
+        {
+            
+            lcd_print("Enter # Wires", 13, 0, 0);
+            input = kp_scanForInput();
+            delay_ms(1000);
+        
+            if (input == 'N') {
+                // nothing found
+                continue;
+            }
+            
+            if (input == 'D' && indexAc > 0) //Delete
+            {
+                accum[indexAc] = '\0';
+                indexAc--;
+            }
+            else if (input != 'E' && indexAc < 16) //add
+            {
+                accum[indexAc] = input;
+                indexAc++;
+            }
+        
+        
+        }
+    
+        
+        lcd_clear();
+    
+        lcd_print(accum, indexAc, 0, 0);
+    
+        delay_ms(6000);
+        
+        int number = 0;
+        
+        for (int lindex = 0; lindex < indexAc; lindex++)
+        {
+            number += ( pow(10, indexAc - 1 - lindex) );
+        }
+        
+        PS = 1; // enable motors
+        delay_us(20);
+        // for demonstration, step motor # of steps
+        motor_stepFeeder(number);
+        
+    
+        //insert motor movement code here
+    
+        lcd_clear();
+    
+        lcd_print("Press to Cut", 11, 0, 0); //wait to cut wire
+        delay_ms(6000);
+    
+    
+        while (input != 'E')
+        {
+            input = kp_scanForInput();
+        
+            if (input == 'N') {
+                // nothing found
+                continue;
+            }
+        
+        
+        }
+        
+        
+        
+        motor_cut();
+        PS = 0; //disable motors
+    
+        //motor code to cut wire here
+    }
+    
+    
+    
+    /*
     int n = 0;
     
     //TRISEbits.TRISE5 = 0b0;
@@ -212,5 +302,7 @@ int main (void) {
         else
             n--;
     }
+    
+    */
     
 }

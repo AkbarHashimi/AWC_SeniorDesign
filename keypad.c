@@ -1,4 +1,5 @@
 #include "lcd.h"
+#include "misc.h"
 #include <xc.h>
 
 char kp_getSymbol(int row, int column) { 
@@ -54,7 +55,8 @@ char kp_scanForInput() {
     
     //keypad drive pins start at RB8
     //keypad-in bits start at RB12 
-	LATBbits.LATB8 = 1;                 //turn on keypad driving pin		
+	LATBbits.LATB8 = 1;
+    //turn on keypad driving pin		
     if (PORTBbits.RB12 == 1) {          //check each keypad input for connection
         return kp_getSymbol(3, 3);
     } else if (PORTBbits.RB13 == 1) {
@@ -65,8 +67,9 @@ char kp_scanForInput() {
         return kp_getSymbol(0, 3);
     }
     LATBbits.LATB8 = 0;                 //turn off keypad drive
+   
     
-    LATBbits.LATB9 = 1; 					
+    LATBbits.LATB9 = 1;
     if (PORTBbits.RB12 == 1) {                                         
         return kp_getSymbol(3, 2);
     } else if (PORTBbits.RB13 == 1) {
@@ -78,7 +81,8 @@ char kp_scanForInput() {
     }
     LATBbits.LATB9 = 0;
     
-    LATBbits.LATB10 = 1; 					
+    
+    LATBbits.LATB10 = 1;
     if (PORTBbits.RB12 == 1) {                                         
         return kp_getSymbol(3, 1);
     } else if (PORTBbits.RB13 == 1) {
@@ -90,7 +94,7 @@ char kp_scanForInput() {
     }
     LATBbits.LATB10 = 0;
     
-    LATBbits.LATB11 = 1; 					
+    LATBbits.LATB11 = 1;  
     if (PORTBbits.RB12 == 1) {                                         
         return kp_getSymbol(3, 0);
     } else if (PORTBbits.RB13 == 1) {
@@ -101,6 +105,8 @@ char kp_scanForInput() {
         return kp_getSymbol(0, 0);
     }
     LATBbits.LATB11 = 0;
+    
+    
 
 	return 'N'; //if nothing is found
 }
